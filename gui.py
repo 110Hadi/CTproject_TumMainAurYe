@@ -32,10 +32,28 @@ def clicked(i,r,c):
     if states[i][r][c] != 'X' and states[i][r][c] != 'O':
         buttons[i][r][c].config(text=nishan)
         states[i][r][c] = nishan
-
     print(states)
-    p1 = not p1   
-     
+    p1 = not p1
+    if check_win(states[i], nishan):
+        states[i] = p1
+        # buttons[i] = tk.Button(width=21, height=9, bg='yellow', font = ('Calibri', ' 12'))
+        # buttons[i].grid(r,c)
+        print(f'{nishan} wins the {i} board')
+        print(states)
+
+def check_win(board,mark):
+    print('called')
+    for r in range(3):
+        if board[r][0] == mark and board[r][1] == mark and board[r][2] == mark:
+            return True
+    for c in range(3):
+        if board[0][c]== mark and board[1][c] == mark and board[2][c] == mark:
+            return True
+    if board[0][0] == mark and board[1][1] == mark and board[2][2] == mark:
+        return True
+    if board[0][2] == mark and board[1][1] == mark and board[2][0] == mark:
+        return True
+    return False    
 
 
 colAdder = 0
