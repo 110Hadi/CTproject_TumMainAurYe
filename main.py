@@ -134,10 +134,6 @@ for i in range(9):
             buttons[i][r][c].grid(row = rowAdder+ r, column = colAdder + c)
 
 
-
-
-         
-
 # butt.pack()
 print('...............................................')
 print(buttons)

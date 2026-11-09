@@ -6,12 +6,15 @@ mainWindow.title('Super Tic-Tac-Toe')
 mainWindow.geometry('700x700')
 
 colours = ['yellow','orange']
-
 buttons = {i : [[None for j in range(3)] for k in range(3)] for i in range(9)}
-
 states = {i : [['' for j in range(3)] for k in range(3)] for i in range(9)}
+p1 = True
+nextBoard = None
+
 print(states)
 print(buttons)
+
+
 
 def toggle(c):
     if c == 0:
@@ -19,30 +22,52 @@ def toggle(c):
     else:
         return 0
 
-p1 = True
-
 def clicked(i,r,c):
-    global p1
+    global p1, colour, nextBoard
 
     if p1:
         nishan = 'X'
     else:
         nishan = 'O'
 
-    if states[i][r][c] != 'X' and states[i][r][c] != 'O':
+    if states[i][r][c] != 'X' and states[i][r][c] != 'O' and (i == nextBoard or nextBoard == None):
         buttons[i][r][c].config(text=nishan)
         states[i][r][c] = nishan
-    print(states)
-    p1 = not p1
+        p1 = not p1
+
     if check_win(states[i], nishan):
-        states[i] = p1
-        # buttons[i] = tk.Button(width=21, height=9, bg='yellow', font = ('Calibri', ' 12'))
-        # buttons[i].grid(r,c)
+        states[i] = [nishan for i in range(3)]
+
+        if i < 3:
+            row = 0
+        elif i < 6:
+            row = 3
+        else:
+            row = 6
+        col = (i % 3) * 3
+
+        if i % 2 == 0:
+            colour = 0
+        else:
+            colour = 1
+        
+        for ro in range(3):
+            for co in range(3):
+                buttons[i][ro][co].destroy()
+                buttons[i][ro][co] = tk.Label(text=nishan, width=7, height=3, bg=colours[colour], font = ('Calibri', ' 12'))
+                buttons[i][ro][co].grid(row = row + ro, column = col + co)
+
+        if check_win(states, nishan):
+            print(f'{nishan} has won the game')
+
+        nextBoard = r * 3 + c
+        if type(states[nextBoard][0]) != list:
+            nextBoard = None
+
         print(f'{nishan} wins the {i} board')
         print(states)
 
 def check_win(board,mark):
-    print('called')
     for r in range(3):
         if board[r][0] == mark and board[r][1] == mark and board[r][2] == mark:
             return True
@@ -55,7 +80,21 @@ def check_win(board,mark):
         return True
     return False    
 
+def is_full(board):
+    for row in board:
+        if '' in row:
+            return False
+    return True
 
+
+
+
+
+
+
+
+
+# main
 colAdder = 0
 rowAdder = 0
 colour = 0
