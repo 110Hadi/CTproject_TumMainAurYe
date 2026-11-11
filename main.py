@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+# from tkinter import ttk
 from tkinter import messagebox
 
 mainWindow = tk.Tk()
@@ -15,8 +15,8 @@ nextBoard = None    # None = player can choose any board
 gameOver = False
 
 
-print(states)
-print(buttons)
+# print(states)
+# print(buttons)
 
 def toggle(c):
     if c == 0:
@@ -44,6 +44,7 @@ def big_board():
         grid[i // 3][i % 3] = boardWinners[i]
     return grid
 
+
 def is_full(board):
     for row in board:
         if '' in row:
@@ -67,7 +68,7 @@ def clicked(i, r, c):
         nishan = 'O'
 
 
-    if states[i][r][c] == '':
+    if type(states[i]) == list and states[i][r][c] == '':
         # 2. place the mark
         buttons[i][r][c].config(text=nishan)
         states[i][r][c] = nishan
@@ -97,19 +98,17 @@ def clicked(i, r, c):
                     buttons[i][ro][co].grid(row = row + ro, column = col + co)
 
             # 4. whole game win
+            print(big_board())
             if check_win(big_board(), nishan):
                 messagebox.showinfo('Game over', nishan + ' wins the game!')
                 gameOver = True
 
-        # 5. decide where the opponent must play
+        # decide where the opponent must play
         nextBoard = r * 3 + c
         if boardWinners[nextBoard] != '' or is_full(states[nextBoard]):
             nextBoard = None
 
-
-
-        # 6. switch turn
-        p1 = not p1
+        p1 = not p1 # switch player
 
 
 
@@ -136,6 +135,6 @@ for i in range(9):
 
 # butt.pack()
 print('...............................................')
-print(buttons)
-print(states)
+# print(buttons)
+# print(states)
 mainWindow.mainloop()
