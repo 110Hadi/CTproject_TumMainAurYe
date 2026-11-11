@@ -1,6 +1,5 @@
 
 import tkinter as tk
-# from tkinter import ttk
 from tkinter import messagebox
 
 mainWindow = tk.Tk()
@@ -10,7 +9,6 @@ mainWindow.geometry('700x700')
 colours = ['pink','light blue']
 buttons = {i : [[None for j in range(3)] for k in range(3)] for i in range(9)}
 states = {i : [['' for j in range(3)] for k in range(3)] for i in range(9)}
-boardWinners = {i: '' for i in range(9)}
 p1 = True
 nextBoard = None    # None = player can choose any board
 gameOver = False
@@ -103,7 +101,7 @@ def clicked(i, r, c):
                     buttons[i][ro][co].grid(row = row + ro, column = col + co)
 
             # 4. whole game win
-            print(big_board())
+            # print(big_board())
             if check_win(big_board(), nishan):
                 messagebox.showinfo('Game over', nishan + ' wins the game!')
                 gameOver = True
@@ -137,11 +135,6 @@ for i in range(9):
             buttons[i][r][c] = tk.Button(width=7, height=3, bg=colours[colour], command = lambda i=i, r=r, c=c: clicked(i, r, c), font = ('Calibri', ' 12'))
             buttons[i][r][c].grid(row = rowAdder+ r, column = colAdder + c)
 
-
-# butt.pack()
-print('...............................................')
-# print(buttons)
-# print(states)
 mainWindow.mainloop()
 
 
